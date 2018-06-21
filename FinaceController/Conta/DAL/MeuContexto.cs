@@ -11,7 +11,7 @@ namespace Conta.DAL
     {
         public MeuContexto() : base("strConn")
          {
- 
+            Database.SetInitializer<MeuContexto>(new DropCreateDatabaseIfModelChanges<MeuContexto>());
          }
     }
 }
