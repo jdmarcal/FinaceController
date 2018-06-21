@@ -4,8 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Data.Entity;
+using System.ComponentModel.DataAnnotations;
 
-namespace Conta.DAL
+
+
+namespace Modelos.DAL
 {
     class MeuContexto : DbContext
     {
@@ -13,5 +16,7 @@ namespace Conta.DAL
          {
             Database.SetInitializer<MeuContexto>(new DropCreateDatabaseIfModelChanges<MeuContexto>());
          }
+
+        public DbSet<Conta> Contas { get; set; }
     }
 }
