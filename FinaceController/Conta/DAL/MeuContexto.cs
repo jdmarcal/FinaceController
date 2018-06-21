@@ -9,5 +9,9 @@ namespace Conta.DAL
 {
     class MeuContexto : DbContext
     {
+        public MeuContexto() : base("strConn")
+         {
+ 
+         }
     }
 }
