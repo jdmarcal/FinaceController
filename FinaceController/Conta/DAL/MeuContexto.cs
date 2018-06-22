@@ -10,12 +10,17 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Modelos.DAL
 {
-    class MeuContexto : DbContext
+   public class MeuContexto : DbContext
     {
         public MeuContexto() : base("strConn")
          {
             Database.SetInitializer<MeuContexto>(new DropCreateDatabaseIfModelChanges<MeuContexto>());
          }
+
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+        }
 
         public DbSet<Conta> Contas { get; set; }
     }
