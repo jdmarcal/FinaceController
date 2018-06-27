@@ -78,7 +78,7 @@ namespace FinaceController.Controllers
             }
 
             return View(con);
-        }
+        }       
 
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -98,8 +98,59 @@ namespace FinaceController.Controllers
             return View(con);
         }
 
+        //public ActionResult Pagar(int? id)
+        //{
+        //    if (id == null)
+        //    {
+        //        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+        //    }
+
+        //    MeuContexto contexto = new MeuContexto();
+        //    Conta con = contexto.Contas.Find(id);
+
+        //    if (con == null)
+        //    {
+        //        return HttpNotFound();
+        //    }
+
+        //    return View(con);
+        //}
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Pagar(int? idConta)
+        {
+            if (ModelState.IsValid)
+            {
+                MeuContexto contexto = new MeuContexto();
+
+                if (idConta == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+
+
+                Conta con = contexto.Contas.Find(idConta);
+
+                if (con == null)
+                {
+                    return HttpNotFound();
+                }
+
+                con.Pago = true;
+
+                contexto.Entry(con).State =
+                    System.Data.Entity.EntityState.Modified;
+
+                contexto.SaveChanges();
+                return RedirectToAction("Index");
+            }
+
+            return View();
+        }
+
         //GET
-         public ActionResult Delete(int? id)
+        public ActionResult Delete(int? id)
          {
              if (id == null)
              {
@@ -131,5 +182,6 @@ namespace FinaceController.Controllers
 
             return RedirectToAction("Index");
         }
+
     }
 }

@@ -19,5 +19,7 @@ namespace Modelos
         public double Valor { get; set; }
 
         public string Tipo { get; set; }
+
+        public bool Pago { get; set; }
     }
 }

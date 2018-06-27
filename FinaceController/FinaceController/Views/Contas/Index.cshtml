@@ -2,21 +2,20 @@
 
 @{
     ViewBag.Title = "Index";
+    double totalPagar = 0;
+    double totalPago = 0;
 }
 
-<h2>Index</h2>
-
+<h2>Minhas Contas</h2>
+<h4>Contas a pagar</h4>
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @Html.ActionLink("Cadastrar Novo", "Create")    
 </p>
 <table class="table">
     <tr>
         <th>
             @Html.DisplayNameFor(model => model.Descricao)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Vencimento)
-        </th>
+        </th>        
         <th>
             @Html.DisplayNameFor(model => model.Valor)
         </th>
@@ -27,13 +26,13 @@
     </tr>
 
 @foreach (var item in Model) {
+
+    if (item.Pago == false)
+    {
     <tr>
         <td>
             @Html.DisplayFor(modelItem => item.Descricao)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Vencimento)
-        </td>
+        </td>     
         <td>
             @Html.DisplayFor(modelItem => item.Valor)
         </td>
@@ -44,8 +43,73 @@
             @Html.ActionLink("Edit", "Edit", new { id=item.IdConta }) |
             @Html.ActionLink("Details", "Details", new { id=item.IdConta }) |
             @Html.ActionLink("Delete", "Delete", new { id=item.IdConta })
-        </td>
+        </td>       
     </tr>
-}
 
+
+        {
+            totalPagar += item.Valor;
+        }
+    }
+}
 </table>
+
+<tr>
+    <td>
+        <h1>Total: R$@totalPagar</h1>
+    </td>
+</tr>
+<br /><br /><br /><br />
+<h4>Contas Pagas</h4>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Descricao)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Valor)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Tipo)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+
+        if (item.Pago == true)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Descricao)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Valor)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Tipo)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.IdConta }) |
+                    @Html.ActionLink("Details", "Details", new { id = item.IdConta }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = item.IdConta })
+                </td>
+            </tr>
+
+
+            {
+                totalPago += item.Valor;
+            }
+        }
+    }
+</table>
+
+<tr>
+    <td>
+        <h1>Total: R$@totalPago</h1>
+    </td>
+</tr>
+
+
+
